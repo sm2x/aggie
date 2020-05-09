@@ -36,7 +36,7 @@ var schema = new mongoose.Schema({
   closed: { type: Boolean, default: false, required: true },
   public: { type: Boolean, default: false, required: true },
   publicDescription: String,
-  // idnum: { type: Number, required: true }, TODO: delete this comment b/c mongoose-sequence created idnum for us
+  idnum: { type: Number, required: true },
   totalReports: { type: Number, default: 0, min: 0 },
   notes: String
 });
@@ -69,8 +69,8 @@ schema.post('remove', function() {
 
 });
 
-var Incident = mongoose.model('Incident', schema);
 schema.plugin(AutoIncrement, { inc_field: 'idnum' });
+var Incident = mongoose.model('Incident', schema);
 
 Report.schema.on('change:incident', function(prevIncident, newIncident) {
   if (prevIncident !== newIncident) {
