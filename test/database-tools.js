@@ -57,8 +57,9 @@ exports.resetDb = function(callback) {
         hasDefaultPassword: true,
         role: 'admin'
       }, next);
-      // Recreate identitycounters collection
-      Incident.schema.plugin(AutoIncrement, { inc_field: 'idnum' });
+      
+      // Reset incident counter
+      Incident.counterReset('idnum')
     }
   ], callback);
 };
