@@ -4,7 +4,7 @@ var database = require('../lib/database');
 var mongoose = database.mongoose;
 var bcrypt = require('bcrypt');
 var crypto = require('crypto');
-var email = require('email');
+var emailValidator = require('email-validator');
 var _ = require('underscore');
 var logger = require('../lib/logger');
 
@@ -24,7 +24,7 @@ userSchema.pre('save', function(next) {
 
   if (!user.email) return next(new Error.Validation('email_required'));
   if (!user.username) return next(new Error.Validation('username_required'));
-  if (!email.isValidAddress(user.email)) return next(new Error.Validation('email_invalid'));
+  if (!emailValidator.validate(user.email)) return next(new Error.Validation('email_invalid'));
   if (user.password && user.password.length < User.PASSWORD_MIN_LENGTH) return next(new Error.Validation('password_too_short'));
 
   // Check for uniqueness in certain fields
