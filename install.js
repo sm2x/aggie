@@ -17,16 +17,17 @@ function enableIndexing(callback) {
     }, 200);
   });
   database.mongoose.connection.once('open', function() {
-    // Enable database-level text search
-    database.mongoose.connections[0].db.admin().command({ setParameter: 1, textSearchEnabled: true }, function(err, res) {
-      if (err) console.error(err);
-      else console.log('Text search has been enabled for MongoDB.');
+    // TODO textSearchEnabled seems deprecated, needs a replacement 
+    // // Enable database-level text search
+    // database.mongoose.connections[0].db.admin().command({ setParameter: 1, textSearchEnabled: true }, function(err, res) {
+    //   if (err) console.error(err);
+    //   else console.log('Text search has been enabled for MongoDB.');
       Report.ensureIndexes(function(err) {
         if (err) console.error(err);
         else console.log('Full-text indexing is enabled for Reports.');
         callback();
       });
-    });
+    // });
   });
 }
 tasks.push(enableIndexing);
