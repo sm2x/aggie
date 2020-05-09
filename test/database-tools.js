@@ -7,7 +7,7 @@ var Report = require('../models/report');
 var Source = require('../models/source');
 var Trend = require('../models/trend');
 var Incident = require('../models/incident');
-var autoIncrement = require('mongoose-auto-increment');
+var AutoIncrement = require('mongoose-sequence')(database.mongoose);
 
 exports.initDb = function(callback) {
   async.series([
@@ -56,8 +56,7 @@ exports.resetDb = function(callback) {
         role: 'admin'
       }, next);
       // Recreate identitycounters collection
-      autoIncrement.initialize(database.mongoose.connection);
-      Incident.schema.plugin(autoIncrement.plugin, { model: 'Incident', field: 'idnum', startAt: 1 });
+      Incident.schema.plugin(AutoIncrement, { inc_field: 'idnum' });
     }
   ], callback);
 };

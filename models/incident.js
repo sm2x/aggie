@@ -9,7 +9,7 @@ var database = require('../lib/database');
 var mongoose = database.mongoose;
 var validator = require('validator');
 var _ = require('underscore');
-var autoIncrement = require('mongoose-auto-increment');
+var AutoIncrement = require('mongoose-sequence')(mongoose);
 var Report = require('./report');
 var logger = require('../lib/logger');
 var toRegexp = require('./to-regexp');
@@ -41,8 +41,6 @@ var schema = new mongoose.Schema({
   notes: String
 });
 
-autoIncrement.initialize(mongoose.connection);
-
 schema.pre('save', function(next) {
   if (this.isNew) this.storedAt = new Date();
   this.updatedAt = new Date();
@@ -72,7 +70,7 @@ schema.post('remove', function() {
 });
 
 var Incident = mongoose.model('Incident', schema);
-schema.plugin(autoIncrement.plugin, { model: 'Incident', field: 'idnum', startAt: 1 });
+schema.plugin(AutoIncrement, { inc_field: 'idnum' });
 
 Report.schema.on('change:incident', function(prevIncident, newIncident) {
   if (prevIncident !== newIncident) {
