@@ -36,7 +36,7 @@ var schema = new mongoose.Schema({
   closed: { type: Boolean, default: false, required: true },
   public: { type: Boolean, default: false, required: true },
   publicDescription: String,
-  idnum: { type: Number, required: true },
+  // idnum: { type: Number, required: true }, TODO: delete this comment b/c mongoose-sequence created idnum for us
   totalReports: { type: Number, default: 0, min: 0 },
   notes: String
 });
