@@ -98,13 +98,15 @@ gulp.task('backend', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.js, ['lint', 'backend']);
-  gulp.watch(paths.backend, ['lint', 'backend']);
+  gulp.watch(paths.js, gulp.series('lint', 'backend'));
+  gulp.watch(paths.backend, gulp.series('lint', 'backend'));
 });
 
-gulp.task('test', ['backend']);
+gulp.task('test', gulp.series('backend'));
+//TO DO: Code updated assuming the purpose is to reroute task. Verify what the original code intended to do. 
 
-gulp.task('default', ['lint', 'test', 'watch']);
+gulp.task('default', gulp.series('lint', 'test', 'watch'));
+//TO DO: Code updated assuming the purpose is to run three tasks in series. Verify what the original code intended to do. 
 
 /*
  * Takes a directory of translation dictionaries named locale-foo.json and
@@ -131,4 +133,6 @@ gulp.task('debugTranslations', function() {
   return merge(stream1, stream2);
 });
 
-gulp.task('build', ['debugTranslations', 'angular']);
+gulp.task('build', function() {
+  gulp.parallel('debugTranslations', 'angular');
+}); //TO DO: Code updated assuming the purpose is to run three tasks in parallel. Verify what the original code intended to do.

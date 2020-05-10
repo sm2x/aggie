@@ -80,8 +80,12 @@
     "chai": "^4.2.0",
     "clarinet": "^0.12.4",
     "deep-keys": "^0.5.0",
+    "gulp-jsoncombine": "^1.0.4",
+    "gulp-ng-annotate": "^2.1.0",
+    "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
     "mocha": "^7.1.2",
-    "supertest": "^4.0.2"
+    "supertest": "^4.0.2",
+    "vinyl-buffer": "^1.0.1"
   }
 }
