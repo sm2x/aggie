@@ -4,11 +4,11 @@ var gulp = require('gulp');
 var jshint = require('gulp-jshint');
 var mocha = require('gulp-mocha');
 var rename = require('gulp-rename');
-var transform = require('vinyl-transform');
 var browserify = require('browserify');
 var uglify = require('gulp-uglify');
 var buffer = require('vinyl-buffer');
 var ngAnnotate = require('gulp-ng-annotate');
+var source = require('vinyl-source-stream');
 var sourcemaps = require('gulp-sourcemaps');
 var plumber = require('gulp-plumber');
 var livereload = require('gulp-livereload');
@@ -47,14 +47,13 @@ gulp.task('lint', function() {
 });
 
 pipes.buildAngular = function() {
-  var browserified = transform(function(filename) {
-    var b = browserify(filename);
-    return b.bundle();
-  });
-  return gulp.src('public/angular/js/app.js')
+  var b = browserify({
+    entries: 'public/angular/js/app.js'
+  }).bundle();
+  return b
+    .pipe(source('public/angular/js/app.js'))
     .pipe(plumber())
     .pipe(sourcemaps.init())
-    .pipe(browserified)
     .pipe(ngAnnotate())
     .pipe(buffer())
     .pipe(uglify())
@@ -64,13 +63,12 @@ pipes.buildAngular = function() {
 };
 
 pipes.debugAngular = function() {
-  var browserified = transform(function(filename) {
-    var b = browserify(filename);
-    return b.bundle();
-  });
-  return gulp.src('public/angular/js/app.js')
+  var b = browserify({
+    entries: 'public/angular/js/app.js'
+  }).bundle();
+  return b
+    .pipe(source('public/angular/js/app.js'))
     .pipe(plumber())
-    .pipe(browserified)
     .pipe(rename('app.min.js'))
     .pipe(gulp.dest('public/angular/js'));
 };

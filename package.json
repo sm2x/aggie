@@ -71,7 +71,7 @@
     "underscore": "^1.10.2",
     "uuid": "^8.0.0",
     "validator": "^13.0.0",
-    "vinyl-transform": "^1.0.0",
+    "vinyl-source-stream": "^2.0.0",
     "winston": "^3.2.1",
     "winston-amazon-ses": "^0.1.4",
     "winston-slack-transport": "^2.0.0"
