@@ -85,7 +85,7 @@ gulp.task('angular', function() {
 // Reload browser
 gulp.task('angular.watch', function() {
   livereload.listen();
-  gulp.watch(paths.angular, ['watchAngular']);
+  gulp.watch(paths.angular, gulp.series('watchAngular'));
 });
 
 gulp.task('backend', function() {
@@ -96,15 +96,15 @@ gulp.task('backend', function() {
 });
 
 gulp.task('watch', function() {
-  gulp.watch(paths.js, gulp.series('lint', 'backend'));
-  gulp.watch(paths.backend, gulp.series('lint', 'backend'));
+  gulp.watch(paths.js, gulp.parallel('lint', 'backend'));
+  gulp.watch(paths.backend, gulp.parallel('lint', 'backend'));
 });
 
 gulp.task('test', gulp.series('backend'));
 //TO DO: Code updated assuming the purpose is to reroute task. Verify what the original code intended to do. 
 
-gulp.task('default', gulp.series('lint', 'test', 'watch'));
-//TO DO: Code updated assuming the purpose is to run three tasks in series. Verify what the original code intended to do. 
+gulp.task('default', gulp.parallel('test','lint', 'watch'));
+//TO DO: Code updated assuming the purpose is to run three tasks in parallel. Verify what the original code intended to do. 
 
 /*
  * Takes a directory of translation dictionaries named locale-foo.json and
@@ -120,10 +120,10 @@ pipes.debugTranslations = function(dirname) {
   ])
     .pipe(jsoncombine(debugFilename, function(data) {
       var result = makeDebugDict(_.values(data));
-      return new Buffer(JSON.stringify(result, null, 2));
+      return new Buffer.from(JSON.stringify(result, null, 2));
     }))
     .pipe(gulp.dest(dirname));
-};
+}; //TO DO: Fix deepmerge interaction error with lodash on later versions of deepmerge. Old version works with latest Node.
 
 gulp.task('debugTranslations', function() {
   var stream1 = pipes.debugTranslations(paths.translations);
