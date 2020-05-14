@@ -20,7 +20,7 @@ function createServer(app) {
   var certFile = path.resolve(__dirname, '../../config/cert.pem');
   return https.createServer({
     key: fs.readFileSync(keyFile),
-    cert: fs.readFileSync(certFile)
+    cert: fs.readFileSync(certFile),
   }, app);
 }
 

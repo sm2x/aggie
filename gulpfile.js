@@ -100,7 +100,7 @@ gulp.task('watch', function() {
   gulp.watch(paths.backend, gulp.parallel('lint', 'backend'));
 });
 
-gulp.task('test', gulp.series('backend'));
+gulp.task('test', gulp.parallel('backend'));
 //TO DO: Code updated assuming the purpose is to reroute task. Verify what the original code intended to do. 
 
 gulp.task('default', gulp.parallel('test','lint', 'watch'));
