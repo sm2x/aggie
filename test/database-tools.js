@@ -18,7 +18,7 @@ exports.initDb = function(callback) {
       // Change database before starting any test
       var host = process.env.MONGO_HOST || 'localhost';
       var dbConnectURL = process.env.MONGO_CONNECTION_URL = 'mongodb://' + host + '/aggie-test';
-      database.mongoose.connect(dbConnectURL, next);
+      database.mongoose.connect(dbConnectURL,{useUnifiedTopology: true, useNewUrlParser: true}, next);
     },
     function(next) {
       // TODO textSearchEnabled seems deprecated, needs a replacement
