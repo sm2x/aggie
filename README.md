@@ -49,7 +49,7 @@ Report queries can be saved and tracked over time via a series of visual analyti
 
 Aggie is built for scalability and can handle hundreds of incoming reports per second. The backend fetching and analytics systems feature a modular design well-suited to parallelism and multi-core architectures.
 
-Users can be assigned to *admin*, *manager*, *monitor*, and *viewer* roles, each with appropriate permissions.
+Users can be assigned to *admin*, *monitor*, and *viewer* roles, each with appropriate permissions.
 
 Aggie is built using Angular.js and Express.js, both state-of-the-art development frameworks.
 
